@@ -1484,56 +1484,58 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            
-            {/* Feature 1 */}
-            <div className="bg-[#F8FAFC] border border-gray-200 p-5 rounded-2xl text-right space-y-2 hover:shadow-sm transition">
-              <h3 className="font-extrabold text-base text-gray-900">اطلب نفس الطلب تاني</h3>
-              <p className="text-xs text-[#6B7280] leading-relaxed">
-                العميل يكرر طلب البيت المعتاد بضغطة واحدة.
-              </p>
-            </div>
-
-            {/* Feature 2 */}
-            <div className="bg-[#F8FAFC] border border-gray-200 p-5 rounded-2xl text-right space-y-2 hover:shadow-sm transition">
-              <h3 className="font-extrabold text-base text-gray-900">سلة البيت</h3>
-              <p className="text-xs text-[#6B7280] leading-relaxed">
-                قائمة مفضلة بمنتجات البيت المتكررة.
-              </p>
-            </div>
-
-            {/* Feature 3 */}
-            <div className="bg-[#F8FAFC] border border-gray-200 p-5 rounded-2xl text-right space-y-2 hover:shadow-sm transition">
-              <h3 className="font-extrabold text-base text-gray-900">مش لاقي المنتج؟</h3>
-              <p className="text-xs text-[#6B7280] leading-relaxed">
-                العميل يكتب اللي محتاجه والبقال يرد عليه.
-              </p>
-            </div>
-
-            {/* Feature 4 */}
-            <div className="bg-[#F8FAFC] border border-gray-200 p-5 rounded-2xl text-right space-y-2 hover:shadow-sm transition">
-              <h3 className="font-extrabold text-base text-gray-900">عروض آخر اليوم</h3>
-              <p className="text-xs text-[#6B7280] leading-relaxed">
-                البقال يفعّل عروض سريعة لتصريف المنتجات.
-              </p>
-            </div>
-
-            {/* Feature 5 */}
-            <div className="bg-[#F8FAFC] border border-gray-200 p-5 rounded-2xl text-right space-y-2 hover:shadow-sm transition">
-              <h3 className="font-extrabold text-base text-gray-900">دفتر البيت</h3>
-              <p className="text-xs text-[#6B7280] leading-relaxed">
-                دعم الدفع الآجل أو التسوية الشهرية عند الحاجة.
-              </p>
-            </div>
-
-            {/* Feature 6 */}
-            <div className="bg-[#F8FAFC] border border-gray-200 p-5 rounded-2xl text-right space-y-2 hover:shadow-sm transition">
-              <h3 className="font-extrabold text-base text-gray-900">بدائل ذكية</h3>
-              <p className="text-xs text-[#6B7280] leading-relaxed">
-                لو المنتج غير متاح، تظهر بدائل مناسبة.
-              </p>
-            </div>
-
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
+            {[
+              {
+                Icon: Clock,
+                color: "bg-orange-50 border-orange-100 text-orange-500",
+                title: "اطلب نفس الطلب تاني",
+                desc: "العميل يكرر طلب البيت المعتاد بضغطة واحدة بدون إعادة الاختيار.",
+              },
+              {
+                Icon: Heart,
+                color: "bg-rose-50 border-rose-100 text-rose-500",
+                title: "سلة البيت",
+                desc: "قائمة مفضلة بمنتجات البيت المتكررة جاهزة في أي وقت.",
+              },
+              {
+                Icon: FileText,
+                color: "bg-blue-50 border-blue-100 text-blue-500",
+                title: "مش لاقي المنتج؟",
+                desc: "العميل يكتب اللي محتاجه والبقال يرد عليه مباشرةً.",
+              },
+              {
+                Icon: Flame,
+                color: "bg-amber-50 border-amber-100 text-amber-500",
+                title: "عروض آخر اليوم",
+                desc: "البقال يفعّل عروض سريعة لتصريف المنتجات قبل نهاية اليوم.",
+              },
+              {
+                Icon: DollarSign,
+                color: "bg-green-50 border-green-100 text-[#16A34A]",
+                title: "دفتر البيت",
+                desc: "دعم الدفع الآجل أو التسوية الشهرية مع سكان العمارة.",
+              },
+              {
+                Icon: Sparkles,
+                color: "bg-purple-50 border-purple-100 text-purple-500",
+                title: "بدائل ذكية",
+                desc: "لو المنتج غير متاح، تظهر بدائل مناسبة تلقائياً للعميل.",
+              },
+            ].map(({ Icon, color, title, desc }, i) => (
+              <div
+                key={i}
+                className="bg-white border border-gray-200 rounded-2xl p-6 text-right flex flex-col gap-4 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
+              >
+                <div className={`h-11 w-11 rounded-xl border flex items-center justify-center ${color}`}>
+                  <Icon className="h-5 w-5" />
+                </div>
+                <div className="space-y-1.5">
+                  <h3 className="font-extrabold text-base text-gray-900">{title}</h3>
+                  <p className="text-xs text-[#6B7280] leading-relaxed">{desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
