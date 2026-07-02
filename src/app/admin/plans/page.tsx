@@ -65,9 +65,15 @@ export default async function AdminPlansPage() {
                       <td className="px-4 py-3 text-gray-700">
                         {Number(p.priceYearly).toFixed(2)} ج.م
                       </td>
-                      <td className="px-4 py-3 text-gray-700">{p.maxBuildings}</td>
-                      <td className="px-4 py-3 text-gray-700">{p.maxProducts}</td>
-                      <td className="px-4 py-3 text-gray-700">{p.maxStoreUsers}</td>
+                      <td className="px-4 py-3 text-gray-700">
+                        {p.maxBuildings >= 99999 ? "غير محدود" : p.maxBuildings}
+                      </td>
+                      <td className="px-4 py-3 text-gray-700">
+                        {p.maxProducts >= 99999 ? "غير محدود" : p.maxProducts}
+                      </td>
+                      <td className="px-4 py-3 text-gray-700">
+                        {p.maxStoreUsers >= 99999 ? "غير محدود" : p.maxStoreUsers}
+                      </td>
                       <td className="px-4 py-3">
                         <Badge tone={p.isActive ? "green" : "red"}>
                           {p.isActive ? "مفعّلة" : "متوقفة"}
