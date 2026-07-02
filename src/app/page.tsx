@@ -155,6 +155,10 @@ export default function LandingPage() {
 
             {/* Desktop Navigation Links */}
             <div className="hidden md:flex items-center gap-7 text-sm font-extrabold text-[#6B7280]">
+              <Link href="/find" className="text-[#16A34A] hover:text-[#15803D] font-black flex items-center gap-1 transition-colors">
+                <Store className="h-4 w-4" />
+                <span>بوابة العملاء (اطلب الآن)</span>
+              </Link>
               <a href="#how-it-works" className="hover:text-[#16A34A] transition-colors">طريقة العمل</a>
               <a href="#features" className="hover:text-[#16A34A] transition-colors">المميزات</a>
               <a href="#pricing" className="hover:text-[#16A34A] transition-colors">الأسعار</a>
@@ -191,6 +195,13 @@ export default function LandingPage() {
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
           <div className="md:hidden bg-white border-b border-gray-200/80 px-4 py-4 space-y-3.5 shadow-inner">
+            <Link
+              href="/find"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-sm font-black text-[#16A34A] hover:text-[#15803D]"
+            >
+              بوابة العملاء (اطلب الآن)
+            </Link>
             <a
               href="#how-it-works"
               onClick={() => setMobileMenuOpen(false)}
@@ -259,16 +270,19 @@ export default function LandingPage() {
                   className="h-14 px-8 text-base bg-[#16A34A] hover:bg-[#15803D] text-white font-black rounded-2xl shadow-lg shadow-green-600/15 transition-all transform active:scale-95 duration-200"
                 >
                   <Link href="/login">
-                    ابدأ مع بقال
+                    سجل بقالتك معنا
                     <ArrowRight className="h-4.5 w-4.5 mr-2 shrink-0" />
                   </Link>
                 </Button>
                 <Button
                   asChild
                   variant="outline"
-                  className="h-14 px-8 text-base border-gray-200 text-gray-700 bg-white hover:bg-gray-50 rounded-2xl font-bold"
+                  className="h-14 px-8 text-base border-green-200 text-green-700 bg-green-50 hover:bg-green-100 rounded-2xl font-black shadow-sm"
                 >
-                  <a href="#how-it-works">شوف طريقة العمل</a>
+                  <Link href="/find">
+                    <MapPin className="h-4.5 w-4.5 ml-2 text-green-600" />
+                    تصفح المتاجر القريبة منك
+                  </Link>
                 </Button>
               </div>
 

@@ -10,6 +10,7 @@ import { FloatingCart } from "@/components/customer/floating-cart";
 import { BottomNav } from "@/components/customer/bottom-nav";
 import { PwaRegister } from "@/components/customer/pwa-register";
 import { FavoritesLink } from "@/components/customer/favorites-link";
+import { VisitedStoreTracker } from "@/components/customer/visited-store-tracker";
 import { AddAllButton } from "@/components/customer/add-all-button";
 import { Store as StoreIcon, MessageSquare, Percent, Zap, Flame, Star, ShoppingBasket, TrendingUp } from "lucide-react";
 import { isStoreOpenNow } from "@/lib/hours";
@@ -112,6 +113,16 @@ export default async function StorePage({
   return (
     <div className="min-h-screen pb-24 bg-slate-50" dir="rtl">
       <PwaRegister />
+      <VisitedStoreTracker
+        store={{
+          id: store.id,
+          name: store.name,
+          nameAr: store.nameAr,
+          slug: store.slug,
+          deliveryFee: Number(store.deliveryFee),
+          minOrderAmount: Number(store.minOrderAmount),
+        }}
+      />
 
       {/* Modern Store Header Card Area */}
       <div className="bg-white border-b border-slate-100/80 p-4 space-y-4">
