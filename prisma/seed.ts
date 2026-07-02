@@ -19,6 +19,8 @@ const CATEGORY_LIST: { nameAr: string; slug: string; icon: string }[] = [
   { nameAr: "خضار وفاكهة", slug: "produce", icon: "🥬" },
   { nameAr: "منتجات أطفال", slug: "baby", icon: "🍼" },
   { nameAr: "مستلزمات البيت", slug: "home", icon: "🧻" },
+  { nameAr: "مخللات", slug: "pickles", icon: "🫙" },
+  { nameAr: "عطارة", slug: "spices", icon: "🌶️" },
   { nameAr: "عروض", slug: "offers", icon: "🏷️" },
   { nameAr: "محتاجه بسرعة", slug: "emergency", icon: "⚡" },
 ];
@@ -70,6 +72,13 @@ const PRODUCT_LIST: SeedProduct[] = [
   { nameAr: "مربى فراولة", name: "Strawberry Jam", categorySlug: "sweets", price: 55, stockQuantity: 15, unit: "PIECE", imageUrl: IMG("1590080875515-8a3a8dc5735e") },
   { nameAr: "عسل نحل", name: "Honey", categorySlug: "sweets", price: 150, stockQuantity: 0, unit: "PIECE", imageUrl: IMG("1587049352846-4a222e784d38") },
   { nameAr: "جبنة رومي", name: "Roumi Cheese", categorySlug: "dairy", price: 220, stockQuantity: 6, unit: "KG", imageUrl: IMG("1486297678162-eb2a19b0a32d") },
+  { nameAr: "جبنة بيضاء إسطنبولي", name: "Istanbuli White Cheese", categorySlug: "dairy", price: 140, stockQuantity: 12, unit: "KG", imageUrl: IMG("1486297678162-eb2a19b0a32d") },
+  { nameAr: "جبنة براميلي فلفل", name: "Baramili Cheese with Pepper", categorySlug: "dairy", price: 150, stockQuantity: 8, unit: "KG", imageUrl: IMG("1486297678162-eb2a19b0a32d") },
+  { nameAr: "مخلل مشكل بلدي", name: "Mixed Pickles", categorySlug: "pickles", price: 35, stockQuantity: 20, unit: "KG", imageUrl: IMG("1590080875515-8a3a8dc5735e") },
+  { nameAr: "زيتون أخضر تفاحي", name: "Green Olives", categorySlug: "pickles", price: 110, stockQuantity: 15, unit: "KG", imageUrl: IMG("1590080875515-8a3a8dc5735e") },
+  { nameAr: "فلفل أسود حصى", name: "Black Pepper", categorySlug: "spices", price: 0.5, stockQuantity: 5000, unit: "GRAM", imageUrl: IMG("1597733336794-12d05021d510") },
+  { nameAr: "كمون مطحون نقي", name: "Ground Cumin", categorySlug: "spices", price: 0.4, stockQuantity: 6000, unit: "GRAM", imageUrl: IMG("1597733336794-12d05021d510") },
+  { nameAr: "كزبرة ناعمة", name: "Ground Coriander", categorySlug: "spices", price: 0.25, stockQuantity: 8000, unit: "GRAM", imageUrl: IMG("1597733336794-12d05021d510") },
 ];
 
 const BUILDING_CODES_A = ["AB12CD", "EF34GH", "IJ56KL", "MN78OP"];
@@ -83,6 +92,8 @@ function genOrderNumber() {
 
 async function clearAll() {
   // Order matters: children first.
+  await prisma.walkInSaleItem.deleteMany();
+  await prisma.walkInSale.deleteMany();
   await prisma.orderStatusHistory.deleteMany();
   await prisma.orderItem.deleteMany();
   await prisma.order.deleteMany();
