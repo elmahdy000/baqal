@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -41,7 +41,7 @@ export default function AdminSettingsPage() {
               </div>
               <div>
                 <CardTitle className="text-lg">النسب والعمولات الافتراضية</CardTitle>
-                <CardDescription>القيم الافتراضية التي تُطبق عند إنشاء بقالات جديدة.</CardDescription>
+                <p className="text-xs text-gray-500">القيم الافتراضية التي تُطبق عند إنشاء بقالات جديدة.</p>
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -71,7 +71,7 @@ export default function AdminSettingsPage() {
               </div>
               <div>
                 <CardTitle className="text-lg">بيانات التواصل والدعم للمنصة</CardTitle>
-                <CardDescription>البيانات التي تظهر للبقالات في صفحات الدعم والمساعدة.</CardDescription>
+                <p className="text-xs text-gray-500">البيانات التي تظهر للبقالات في صفحات الدعم والمساعدة.</p>
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -96,7 +96,7 @@ export default function AdminSettingsPage() {
               </div>
               <div>
                 <CardTitle className="text-lg">خيارات التسجيل والقبول</CardTitle>
-                <CardDescription>التحكم في تفعيل أو تعطيل مميزات المنصة العامة.</CardDescription>
+                <p className="text-xs text-gray-500">التحكم في تفعيل أو تعطيل مميزات المنصة العامة.</p>
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
