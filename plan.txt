@@ -1,0 +1,1850 @@
+# Baqal — Multi-Tenant SaaS PWA Grocery Ordering Platform
+
+## Project Name
+
+**Baqal / بقالك**
+
+## Project Type
+
+Build a production-ready **multi-tenant SaaS PWA** for small grocery stores located under residential buildings, compounds, and local neighborhoods.
+
+The platform allows the system admin to create grocery store accounts. Each grocery store can manage its products, images, prices, quantities, QR codes, orders, customers, and delivery operations.
+
+Customers scan a QR code placed inside buildings, elevators, entrances, or WhatsApp groups. The QR opens the store’s PWA directly, allowing residents to order groceries from the store under their building without downloading a native mobile app.
+
+---
+
+# Core Concept
+
+The product is not just an online grocery app.
+
+It is a complete operating system for the local neighborhood grocery store.
+
+The core value:
+
+> The grocery store under the building becomes available online through a QR code.
+
+The customer does not search for stores.
+The customer scans the QR code of the building and lands directly on the assigned grocery store.
+
+---
+
+# Target Market
+
+The system targets:
+
+* Small grocery stores
+* Mini markets
+* Stores under residential buildings
+* Stores inside compounds
+* Stores serving specific buildings or streets
+* Local grocery delivery businesses in Egypt and similar markets
+
+---
+
+# Main Roles
+
+## 1. Super Admin
+
+The platform owner.
+
+Responsibilities:
+
+* Create grocery store accounts
+* Manage subscriptions
+* Manage pricing plans
+* Assign buildings to stores
+* Generate QR codes
+* Monitor platform-wide orders
+* Monitor platform revenue
+* Manage areas and neighborhoods
+* View analytics
+* Manage support tickets
+* Suspend or activate stores
+
+---
+
+## 2. Store Owner / Grocer
+
+The grocery store owner or manager.
+
+Responsibilities:
+
+* Login to store dashboard
+* Manage store profile
+* Add products
+* Upload product images
+* Set prices
+* Manage stock quantities
+* Manage offers
+* Receive realtime orders
+* Accept or reject orders
+* Update order status
+* View customer history
+* Print or share QR codes
+* View reports
+* Manage delivery workers
+* Receive low-stock alerts
+
+---
+
+## 3. Customer
+
+The resident or buyer.
+
+Responsibilities:
+
+* Scan building QR code
+* Browse store products
+* Search products
+* Add products to cart
+* Place order
+* Save apartment details
+* Track order status in realtime
+* Receive push notifications
+* Repeat previous orders
+* Save favorite products
+* Send custom requests if a product is missing
+
+---
+
+## 4. Delivery Worker
+
+Optional role for stores that have delivery staff.
+
+Responsibilities:
+
+* View assigned orders
+* Update delivery status
+* Mark order as delivered
+* Contact customer
+* View delivery notes
+
+---
+
+# Tech Stack
+
+Use the following stack:
+
+```txt
+Next.js App Router
+TypeScript
+PostgreSQL
+Prisma ORM
+Tailwind CSS
+shadcn/ui
+Redis
+Socket.IO or native WebSocket
+PWA Service Worker
+Web Push Notifications using VAPID
+NextAuth or custom credentials auth
+Cloudinary / S3-compatible storage for product images
+Zod for validation
+React Hook Form
+TanStack Query if needed
+```
+
+---
+
+# App Structure
+
+Use a clean scalable structure.
+
+```txt
+/src
+  /app
+    /(public)
+    /(customer)
+    /(store)
+    /(admin)
+    /api
+
+  /components
+    /ui
+    /shared
+    /customer
+    /store
+    /admin
+
+  /lib
+    auth.ts
+    db.ts
+    permissions.ts
+    notifications.ts
+    realtime.ts
+    qr.ts
+    upload.ts
+    validators.ts
+
+  /server
+    /actions
+    /services
+    /repositories
+
+  /types
+
+/prisma
+  schema.prisma
+  seed.ts
+
+/public
+  manifest.json
+  icons
+```
+
+---
+
+# Multi-Tenant Architecture
+
+Each grocery store is a tenant.
+
+Every store-owned record must include:
+
+```txt
+storeId
+```
+
+The system must prevent data leakage between stores.
+
+A store owner should only access data belonging to his own store.
+
+Super admin can access all stores.
+
+Customer routes should resolve the correct store based on:
+
+```txt
+QR code
+building code
+store slug
+store id
+```
+
+Example customer URL:
+
+```txt
+https://baqal.app/b/BUILDING_CODE
+https://baqal.app/store/store-slug
+```
+
+---
+
+# Main Modules
+
+## 1. Authentication
+
+Create secure authentication for:
+
+* Super Admin
+* Store Owner
+* Store Staff
+* Delivery Worker
+* Customer
+
+Authentication requirements:
+
+* Email/password login for admin and store users
+* Phone-based customer login can be added later
+* Password hashing
+* Role-based access control
+* Protected dashboard routes
+* Session handling
+* Logout
+* Store-user relation
+* Middleware protection
+
+Roles:
+
+```txt
+SUPER_ADMIN
+STORE_OWNER
+STORE_STAFF
+DELIVERY
+CUSTOMER
+```
+
+---
+
+## 2. Super Admin Dashboard
+
+Create a complete admin dashboard.
+
+Pages:
+
+```txt
+/admin
+/admin/stores
+/admin/stores/new
+/admin/stores/[id]
+/admin/subscriptions
+/admin/plans
+/admin/orders
+/admin/customers
+/admin/buildings
+/admin/areas
+/admin/qrcodes
+/admin/reports
+/admin/support
+/admin/settings
+```
+
+Admin dashboard features:
+
+* Create store
+* Edit store
+* Activate / suspend store
+* Create store login account
+* Assign pricing plan
+* Track subscription status
+* Add buildings
+* Assign buildings to stores
+* Generate QR code for each building
+* View all orders across platform
+* Filter orders by store, status, area, date
+* View total revenue
+* View active stores
+* View top performing stores
+* View low-performing stores
+* View subscription renewals
+* Manage support tickets
+
+Admin dashboard stats:
+
+```txt
+Total Stores
+Active Stores
+Suspended Stores
+Total Orders Today
+Total Revenue Today
+Monthly Recurring Revenue
+Top Store by Orders
+Top Area by Orders
+Pending Support Tickets
+```
+
+---
+
+## 3. Store Dashboard
+
+Create a simple but powerful store dashboard.
+
+Pages:
+
+```txt
+/store
+/store/orders
+/store/orders/[id]
+/store/products
+/store/products/new
+/store/products/[id]/edit
+/store/categories
+/store/inventory
+/store/offers
+/store/customers
+/store/qrcodes
+/store/buildings
+/store/drivers
+/store/reports
+/store/settings
+```
+
+Store dashboard stats:
+
+```txt
+Today Orders
+Pending Orders
+Today Revenue
+Available Products
+Out of Stock Products
+Low Stock Products
+Top Selling Product
+Repeat Customers
+```
+
+Store dashboard requirements:
+
+* Realtime order notifications
+* Sound alert for new order
+* Big visible pending orders panel
+* Order status update buttons
+* Product CRUD
+* Product image upload
+* Stock quantity management
+* Low stock alerts
+* Offers management
+* Customer order history
+* Building QR code management
+* Basic reports
+* Store working hours
+* Delivery fees
+* Minimum order amount
+* Store open / closed status
+
+---
+
+# Store Product Management
+
+Each product should include:
+
+```txt
+name
+description
+category
+price
+discountPrice
+stockQuantity
+unit
+image
+barcode
+isAvailable
+lowStockThreshold
+expiryDate
+storeId
+createdAt
+updatedAt
+```
+
+Supported units:
+
+```txt
+PIECE
+KG
+GRAM
+LITER
+ML
+PACK
+BOX
+CARTON
+DOZEN
+```
+
+Product features:
+
+* Add product manually
+* Upload product image
+* Duplicate product
+* Edit product quickly
+* Mark unavailable
+* Set discount
+* Set low stock threshold
+* Track stock changes
+* Search by name
+* Filter by category
+* Filter by stock status
+* Filter unavailable products
+* Bulk import using Excel later
+* Barcode support later
+
+---
+
+# Inventory System
+
+Create inventory tracking.
+
+Inventory features:
+
+* Stock decreases automatically after order acceptance or confirmation
+* Stock restores if order is cancelled before delivery
+* Low stock alert when quantity <= threshold
+* Out of stock status when quantity = 0
+* Inventory movement history
+
+Inventory movement types:
+
+```txt
+STOCK_IN
+STOCK_OUT
+ORDER_RESERVED
+ORDER_CANCELLED
+MANUAL_ADJUSTMENT
+DAMAGED
+EXPIRED
+RETURNED
+```
+
+Inventory movement record:
+
+```txt
+productId
+storeId
+type
+quantity
+oldQuantity
+newQuantity
+reason
+createdBy
+createdAt
+```
+
+---
+
+# Customer PWA
+
+Create a fast mobile-first PWA.
+
+Routes:
+
+```txt
+/b/[buildingCode]
+/s/[storeSlug]
+/products/[id]
+/cart
+/checkout
+/orders
+/orders/[id]
+/favorites
+/profile
+/notifications
+```
+
+Customer PWA requirements:
+
+* RTL Arabic interface
+* Mobile-first layout
+* Fast loading
+* Installable PWA
+* Add to Home Screen support
+* Offline-friendly shell
+* Push notifications
+* Product search
+* Category filter
+* Product cards
+* Cart
+* Checkout
+* Save address
+* Save building, floor, apartment number
+* Order tracking
+* Previous orders
+* Repeat order
+* Favorite products
+* Custom request form
+* Store open/closed indicator
+
+---
+
+# Customer First-Time Flow
+
+When customer scans QR for the first time:
+
+1. Open store page linked to building
+2. Show store name and building name
+3. Ask customer for minimal data before checkout only
+4. Customer adds products to cart
+5. At checkout, ask for:
+
+```txt
+Name
+Phone
+Building
+Floor
+Apartment number
+Delivery notes
+```
+
+6. Save customer profile locally and in database
+7. Place order
+8. Show realtime order tracking page
+
+---
+
+# QR Code System
+
+Each building should have a unique QR code.
+
+QR code fields:
+
+```txt
+id
+storeId
+buildingId
+code
+url
+isActive
+scanCount
+lastScannedAt
+createdAt
+```
+
+QR URL example:
+
+```txt
+https://baqal.app/b/AB12CD
+```
+
+QR features:
+
+* Generate QR for each building
+* Download QR as PNG
+* Download printable poster PDF
+* Track scan count
+* Track last scan date
+* Disable QR
+* Reassign QR if needed
+
+Printable QR poster should include Arabic text:
+
+```txt
+امسح واطلب من بقال العمارة
+طلبات بيتك توصلك لحد باب الشقة
+```
+
+---
+
+# Building System
+
+Buildings are important because the business is QR-based.
+
+Building fields:
+
+```txt
+name
+code
+area
+street
+buildingNumber
+compoundName
+storeId
+deliveryFee
+isActive
+```
+
+A store can serve multiple buildings.
+
+A building usually belongs to one main store.
+
+---
+
+# Order System
+
+Order statuses:
+
+```txt
+PENDING
+ACCEPTED
+PREPARING
+OUT_FOR_DELIVERY
+DELIVERED
+CANCELLED
+REJECTED
+```
+
+Order fields:
+
+```txt
+id
+orderNumber
+storeId
+customerId
+buildingId
+addressId
+status
+subtotal
+deliveryFee
+discount
+total
+paymentMethod
+paymentStatus
+notes
+createdAt
+updatedAt
+```
+
+Order item fields:
+
+```txt
+orderId
+productId
+productNameSnapshot
+quantity
+unitPrice
+totalPrice
+notes
+```
+
+Payment methods:
+
+```txt
+CASH_ON_DELIVERY
+PAY_LATER
+WALLET
+CARD_LATER
+```
+
+Payment statuses:
+
+```txt
+UNPAID
+PAID
+PARTIALLY_PAID
+REFUNDED
+```
+
+Order features:
+
+* Customer places order
+* Store receives realtime notification
+* Store accepts or rejects order
+* Store updates status
+* Customer sees status in realtime
+* Push notification sent on every status change
+* Store can add notes
+* Customer can cancel only while status is PENDING
+* Store can reject with reason
+* Order history timeline
+
+---
+
+# Realtime Requirements
+
+Use Socket.IO or WebSocket.
+
+Realtime events:
+
+```txt
+order:new
+order:accepted
+order:rejected
+order:preparing
+order:out_for_delivery
+order:delivered
+order:cancelled
+inventory:low_stock
+inventory:out_of_stock
+notification:new
+store:opened
+store:closed
+```
+
+Realtime rooms:
+
+```txt
+admin
+store:{storeId}
+customer:{customerId}
+order:{orderId}
+driver:{driverId}
+```
+
+When new order is created:
+
+* Emit event to store room
+* Play sound in store dashboard
+* Show browser notification if permission granted
+* Add notification record in database
+* Update pending order count immediately
+
+---
+
+# Push Notifications
+
+Implement Web Push Notifications for PWA.
+
+Use VAPID keys.
+
+Notification triggers:
+
+* New order for store
+* Order accepted
+* Order rejected
+* Order preparing
+* Order out for delivery
+* Order delivered
+* Offer created
+* Low stock alert
+* Subscription renewal reminder
+
+Notification table:
+
+```txt
+id
+userId
+storeId
+title
+body
+type
+data
+isRead
+createdAt
+```
+
+Push subscription table:
+
+```txt
+id
+userId
+endpoint
+p256dh
+auth
+userAgent
+createdAt
+```
+
+---
+
+# Out-of-the-Box Features
+
+## 1. Repeat Order
+
+Customers can repeat a previous order with one click.
+
+Button text:
+
+```txt
+اطلب نفس الطلب تاني
+```
+
+---
+
+## 2. Scheduled Order
+
+Customers can schedule recurring orders.
+
+Examples:
+
+```txt
+كل يوم الساعة 8 الصبح: عيش + لبن
+كل جمعة: مياه + مناديل + منظفات
+```
+
+---
+
+## 3. Smart Text Order
+
+Customer writes:
+
+```txt
+عاوز 2 لبن وعيش وتونة وبيبسي
+```
+
+System should later parse it into cart items.
+
+For MVP, save it as a custom order request.
+
+---
+
+## 4. Missing Product Request
+
+If customer cannot find a product, show:
+
+```txt
+مش لاقي المنتج؟
+اكتب اللي محتاجه والبقال يرد عليك
+```
+
+Store can reply:
+
+```txt
+موجود
+مش موجود
+هجيبهولك خلال ساعة
+```
+
+---
+
+## 5. Pay Later / Monthly Settlement
+
+Support local grocery credit system.
+
+Features:
+
+* Customer can request pay later
+* Store can enable or disable it
+* Store can set customer credit limit
+* Store can view unpaid balances
+* Customer can see monthly balance
+
+Credit fields:
+
+```txt
+customerId
+storeId
+creditLimit
+currentBalance
+isAllowed
+```
+
+---
+
+## 6. Basket of the House
+
+Each customer can have frequent household products.
+
+Arabic label:
+
+```txt
+سلة البيت
+```
+
+Features:
+
+* Favorite repeated products
+* Quick add all to cart
+* Suggested based on previous orders
+
+---
+
+## 7. End-of-Day Offers
+
+Store can create offers that expire soon.
+
+Arabic label:
+
+```txt
+عروض آخر اليوم
+```
+
+Use cases:
+
+* Move slow products
+* Sell products near expiry
+* Increase late-night orders
+
+---
+
+## 8. Smart Substitutions
+
+If a product is unavailable, suggest alternatives.
+
+Example:
+
+```txt
+بيبسي 1 لتر غير متوفر
+البدائل:
+كوكاكولا 1 لتر
+بيبسي 2 لتر
+سفن أب 1 لتر
+```
+
+---
+
+## 9. Emergency Quick Order
+
+Section name:
+
+```txt
+محتاجه بسرعة
+```
+
+Products:
+
+```txt
+مياه
+عيش
+لبن
+حفاضات
+بطاريات
+شاحن
+مناديل
+لبن أطفال
+```
+
+---
+
+## 10. Walk-in Sales
+
+Store can record offline sales from the shop.
+
+This updates inventory even if the sale did not come from the PWA.
+
+Route:
+
+```txt
+/store/pos
+```
+
+Feature name:
+
+```txt
+بيع مباشر
+```
+
+---
+
+# Categories
+
+Create default categories in Arabic:
+
+```txt
+مشروبات
+ألبان
+مخبوزات
+سناكس
+حلويات
+منظفات
+عناية شخصية
+معلبات
+زيوت وسمن
+أرز ومكرونة
+خضار وفاكهة
+منتجات أطفال
+مستلزمات البيت
+عروض
+محتاجه بسرعة
+```
+
+---
+
+# UI / UX Direction
+
+## General Style
+
+Design should be:
+
+* Clean
+* Modern
+* Mobile-first
+* RTL-friendly
+* Fast
+* Simple for non-technical grocery owners
+* Light theme
+* No dark heavy backgrounds
+* No complex dashboards
+* No cartoon style
+* Clear buttons
+* Large touch targets
+* Smooth realtime feedback
+
+## Brand Colors
+
+Use a fresh grocery-style palette:
+
+```txt
+Primary: #16A34A
+Secondary: #F97316
+Background: #F8FAFC
+Text: #111827
+Muted: #6B7280
+Border: #E5E7EB
+Success: #22C55E
+Warning: #F59E0B
+Danger: #EF4444
+```
+
+## Arabic UI Tone
+
+Use simple Egyptian Arabic.
+
+Examples:
+
+```txt
+اطلب دلوقتي
+أضف للسلة
+السلة
+تأكيد الطلب
+طلبك وصل للبقال
+البقال قبل الطلب
+طلبك بيتجهز
+الدليفري طالعلك
+تم التوصيل
+مش لاقي المنتج؟
+اطلب نفس الطلب تاني
+```
+
+---
+
+# Customer Home Page
+
+Customer home should include:
+
+1. Store header
+2. Open / closed status
+3. Search bar
+4. Categories horizontal scroll
+5. Quick order section
+6. Offers
+7. Product grid
+8. Floating cart button
+9. Bottom navigation
+
+Bottom navigation:
+
+```txt
+الرئيسية
+العروض
+طلباتي
+السلة
+حسابي
+```
+
+Product card should include:
+
+```txt
+Image
+Name
+Price
+Discount price if exists
+Availability
+Add button
+Quantity stepper
+```
+
+---
+
+# Checkout Page
+
+Checkout sections:
+
+```txt
+Order items
+Customer info
+Address info
+Delivery notes
+Payment method
+Order summary
+Confirm order button
+```
+
+Order summary:
+
+```txt
+Subtotal
+Delivery fee
+Discount
+Total
+```
+
+---
+
+# Order Tracking Page
+
+Show timeline:
+
+```txt
+تم إرسال الطلب
+البقال قبل الطلب
+طلبك بيتجهز
+الدليفري طالعلك
+تم التوصيل
+```
+
+Each step should update realtime.
+
+---
+
+# Store Orders Page
+
+Store orders page must be optimized for speed.
+
+Tabs:
+
+```txt
+جديدة
+مقبولة
+بتتجهز
+في الطريق
+تم التوصيل
+ملغية
+```
+
+Each order card shows:
+
+```txt
+Order number
+Customer name
+Building
+Apartment
+Total
+Time
+Status
+Items preview
+Accept button
+Reject button
+Update status button
+```
+
+New orders should appear instantly without refresh.
+
+---
+
+# Store Products Page
+
+Features:
+
+* Product table
+* Product cards on mobile
+* Search
+* Filter by category
+* Filter by stock status
+* Add product button
+* Edit button
+* Duplicate button
+* Mark available/unavailable
+* Delete only with confirmation
+
+---
+
+# Store Inventory Page
+
+Show:
+
+```txt
+Low stock products
+Out of stock products
+Inventory movements
+Manual stock adjustment
+```
+
+---
+
+# Reports
+
+## Store Reports
+
+Reports:
+
+```txt
+Sales today
+Sales this week
+Sales this month
+Top selling products
+Low stock products
+Most active customers
+Orders by building
+Cancelled orders
+Average order value
+```
+
+## Admin Reports
+
+Reports:
+
+```txt
+Total platform orders
+Total platform revenue
+Revenue by store
+Orders by area
+Active subscriptions
+Expired subscriptions
+Top stores
+Top buildings
+QR scans
+```
+
+---
+
+# SaaS Subscription System
+
+Plans:
+
+```txt
+Basic
+Plus
+Pro
+Enterprise
+```
+
+Example plan limits:
+
+```txt
+Basic:
+- 3 buildings
+- 300 products
+- 1 store user
+- Basic reports
+
+Plus:
+- 15 buildings
+- 1000 products
+- 3 store users
+- Offers
+- Push notifications
+
+Pro:
+- Unlimited buildings
+- Unlimited products
+- Drivers
+- Advanced reports
+- Pay later
+- POS
+
+Enterprise:
+- Multi-branch
+- Custom onboarding
+- Priority support
+```
+
+Subscription fields:
+
+```txt
+storeId
+planId
+status
+startsAt
+endsAt
+renewalDate
+amount
+billingCycle
+```
+
+Subscription statuses:
+
+```txt
+ACTIVE
+TRIAL
+PAST_DUE
+CANCELLED
+EXPIRED
+```
+
+---
+
+# Database Models Required
+
+Create Prisma models for:
+
+```txt
+User
+Store
+StoreUser
+Plan
+Subscription
+Area
+Building
+QRCode
+Customer
+Address
+Category
+Product
+ProductImage
+InventoryMovement
+Order
+OrderItem
+OrderStatusHistory
+Driver
+Notification
+PushSubscription
+Offer
+Payment
+SupportTicket
+AuditLog
+CreditAccount
+FavoriteProduct
+CustomRequest
+WalkInSale
+WalkInSaleItem
+```
+
+Use proper relations, indexes, timestamps, enums, and cascade rules.
+
+Important indexes:
+
+```txt
+storeId
+customerId
+buildingId
+order status
+createdAt
+product name
+categoryId
+QRCode code
+store slug
+```
+
+---
+
+# Required Prisma Enums
+
+```txt
+UserRole
+StoreStatus
+SubscriptionStatus
+BillingCycle
+ProductUnit
+InventoryMovementType
+OrderStatus
+PaymentMethod
+PaymentStatus
+NotificationType
+SupportTicketStatus
+CustomRequestStatus
+```
+
+---
+
+# Security Requirements
+
+Implement:
+
+* Password hashing
+* Route protection
+* Role-based access control
+* Store-level authorization
+* Input validation with Zod
+* Server-side checks for every mutation
+* Prevent store owner from accessing another store’s data
+* Secure image upload validation
+* Rate limiting for sensitive routes
+* Audit logs for important actions
+
+Audit log actions:
+
+```txt
+STORE_CREATED
+STORE_UPDATED
+PRODUCT_CREATED
+PRODUCT_UPDATED
+PRODUCT_DELETED
+ORDER_ACCEPTED
+ORDER_REJECTED
+ORDER_STATUS_CHANGED
+STOCK_ADJUSTED
+SUBSCRIPTION_UPDATED
+```
+
+---
+
+# PWA Requirements
+
+Create:
+
+```txt
+manifest.json
+service worker
+offline fallback page
+install prompt
+app icons
+push notification support
+```
+
+PWA should support:
+
+* Add to Home Screen
+* Mobile app-like layout
+* Cached shell
+* Fast loading
+* Push notifications
+* Standalone mode
+
+Manifest:
+
+```txt
+name: Baqal
+short_name: Baqal
+display: standalone
+orientation: portrait
+theme_color: #16A34A
+background_color: #F8FAFC
+```
+
+---
+
+# API / Server Actions
+
+Create server actions or API routes for:
+
+## Admin
+
+```txt
+createStore
+updateStore
+suspendStore
+activateStore
+createPlan
+updatePlan
+createBuilding
+assignBuildingToStore
+generateQRCode
+viewPlatformReports
+```
+
+## Store
+
+```txt
+createProduct
+updateProduct
+deleteProduct
+duplicateProduct
+updateStock
+createOffer
+updateOrderStatus
+acceptOrder
+rejectOrder
+assignDriver
+createWalkInSale
+```
+
+## Customer
+
+```txt
+getStoreByQRCode
+createCustomer
+updateCustomerProfile
+addToCart
+placeOrder
+cancelOrder
+repeatOrder
+createCustomRequest
+subscribeToPushNotifications
+```
+
+---
+
+# Validation Rules
+
+Examples:
+
+* Product price must be greater than 0
+* Stock quantity cannot be negative
+* Order must contain at least one item
+* Customer phone is required before checkout
+* Store must be active to receive orders
+* Store must be open to place orders unless pre-order is enabled
+* QR code must be active
+* Building must be assigned to the store
+* Customer cannot cancel after order is accepted unless store allows it
+
+---
+
+# Seed Data
+
+Create seed data for development:
+
+* One super admin
+* Three stores
+* Several buildings
+* Default categories
+* 30 sample products per store
+* Sample customers
+* Sample orders
+* Sample plans
+
+Default admin:
+
+```txt
+email: admin@baqal.app
+password: admin123456
+```
+
+Default store owner:
+
+```txt
+email: store@baqal.app
+password: store123456
+```
+
+---
+
+# MVP Scope
+
+Build MVP first.
+
+## MVP Features
+
+```txt
+Super admin login
+Create store
+Create store owner account
+Create building
+Generate QR code
+Store login
+Store dashboard
+Product CRUD
+Product image upload
+Stock quantity
+Customer PWA via QR
+Cart
+Checkout
+Create order
+Realtime new order alert
+Accept / reject order
+Update order status
+Customer order tracking
+Basic notifications inside app
+Basic reports
+```
+
+Do not build advanced features before MVP works.
+
+---
+
+# Version 2 Features
+
+```txt
+Web push notifications
+Repeat order
+Favorites
+Offers
+Low stock alerts
+Delivery worker role
+Customer profile
+Order history
+QR scan analytics
+```
+
+---
+
+# Version 3 Features
+
+```txt
+Pay later
+Monthly customer balance
+Smart text order
+Barcode scanner
+Excel product import
+POS walk-in sales
+Supplier management
+Advanced reports
+Multi-branch support
+AI product image recognition
+```
+
+---
+
+# Development Priorities
+
+Build in this order:
+
+1. Database schema
+2. Auth and roles
+3. Admin store creation
+4. Store dashboard
+5. Product management
+6. QR code generation
+7. Customer PWA store page
+8. Cart and checkout
+9. Orders
+10. Realtime order notifications
+11. Order tracking
+12. Inventory updates
+13. Reports
+14. PWA installation
+15. Push notifications
+
+---
+
+# Critical Business Logic
+
+## New Order Logic
+
+When customer places order:
+
+1. Validate store is active
+2. Validate store is open
+3. Validate products belong to same store
+4. Validate stock availability
+5. Create order
+6. Create order items with price snapshot
+7. Reserve or decrease stock
+8. Create order status history
+9. Create notification for store
+10. Emit realtime event to store dashboard
+11. Show tracking page to customer
+
+---
+
+## Order Acceptance Logic
+
+When store accepts order:
+
+1. Change status to ACCEPTED
+2. Add status history
+3. Notify customer
+4. Emit realtime event
+5. Keep stock deducted
+
+---
+
+## Order Cancellation Logic
+
+When order is cancelled:
+
+1. Change status to CANCELLED
+2. Restore stock if needed
+3. Add status history
+4. Notify customer and store
+5. Emit realtime event
+
+---
+
+## Low Stock Logic
+
+After stock changes:
+
+1. Check product quantity
+2. If quantity <= lowStockThreshold, create low-stock notification
+3. If quantity = 0, mark product out of stock
+4. Emit realtime inventory alert to store dashboard
+
+---
+
+# UX Rules
+
+* Do not overload grocery owner with complex screens
+* Use big buttons for order actions
+* New orders must be impossible to miss
+* Customer checkout must be short
+* Product adding must be fast
+* Use Arabic labels for customer and store UI
+* Admin UI can be Arabic or English but should support RTL
+* Avoid visual clutter
+* Avoid heavy dark backgrounds
+* Avoid tiny action buttons on mobile
+* Always show clear empty states
+* Always show loading states
+* Always show error states
+* Always confirm destructive actions
+
+---
+
+# Empty States
+
+Examples:
+
+```txt
+No products:
+لسه مفيش منتجات. ابدأ بإضافة أول منتج.
+
+No orders:
+لسه مفيش طلبات جديدة.
+
+No low stock:
+كل المنتجات كميتها كويسة.
+
+No QR codes:
+أنشئ QR لأول عمارة.
+```
+
+---
+
+# Notification Messages
+
+Use these Arabic notification texts:
+
+```txt
+طلب جديد وصل
+عندك طلب جديد من عمارة {buildingName}
+
+تم قبول طلبك
+البقال قبل الطلب وبدأ يجهزه
+
+طلبك بيتجهز
+طلبك دلوقتي بيتجهز
+
+الدليفري طالعلك
+طلبك في الطريق لباب الشقة
+
+تم توصيل الطلب
+شكرا لاستخدامك بقالك
+
+المنتج قرب يخلص
+{productName} باقي منه {quantity}
+```
+
+---
+
+# Landing Page
+
+Create a public landing page for SaaS marketing.
+
+Route:
+
+```txt
+/
+```
+
+Landing sections:
+
+```txt
+Hero
+Problem
+Solution
+How it works
+Features
+For grocery stores
+For residents
+Pricing
+FAQ
+Contact
+```
+
+Hero Arabic copy:
+
+```txt
+خلي بقال العمارة يستقبل طلبات أونلاين في نفس اليوم
+
+بقالك منصة SaaS للبقالين والميني ماركت.
+اطبع QR للعمارات، خلي السكان يطلبوا من الموبايل، واستقبل الطلبات لحظة بلحظة.
+```
+
+CTA:
+
+```txt
+ابدأ مع بقالك
+شاهد طريقة العمل
+```
+
+How it works:
+
+```txt
+1. ننشئ حساب للبقال
+2. نضيف المنتجات والأسعار
+3. نطبع QR للعمارات
+4. السكان يمسحوا ويطلبوا
+5. البقال يستقبل الطلب realtime
+```
+
+---
+
+# Deliverables
+
+Generate:
+
+1. Full Next.js project
+2. Prisma schema
+3. PostgreSQL setup
+4. Seed file
+5. Auth system
+6. Admin dashboard
+7. Store dashboard
+8. Customer PWA
+9. QR code generation
+10. Product CRUD
+11. Order system
+12. Realtime notifications
+13. Inventory tracking
+14. PWA setup
+15. Basic reports
+16. Clean responsive RTL UI
+17. Reusable components
+18. Proper error handling
+19. Loading states
+20. Empty states
+
+---
+
+# Code Quality Requirements
+
+* Use TypeScript strictly
+* Use clean components
+* Use server-side validation
+* Avoid duplicate code
+* Use reusable UI components
+* Use clear file naming
+* Use Prisma relations properly
+* Add comments only where needed
+* Keep business logic in service layer
+* Do not put all logic inside React components
+* Handle errors gracefully
+* Make the system easy to extend
+
+---
+
+# Final Goal
+
+The final product should allow this real-world flow:
+
+1. Super admin creates a grocery store account.
+2. Store owner logs in.
+3. Store owner adds products, prices, images, and quantities.
+4. Admin or store owner creates QR code for a building.
+5. QR is printed and placed inside the building.
+6. Resident scans QR.
+7. Resident opens the PWA directly.
+8. Resident selects products and places an order.
+9. Store receives realtime alert.
+10. Store accepts and prepares the order.
+11. Customer tracks order status.
+12. Delivery sends order to apartment.
+13. Inventory updates automatically.
+14. Admin monitors store activity and subscriptions.
+
+Build this as a serious SaaS product, not a demo.
