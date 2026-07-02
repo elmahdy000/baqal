@@ -272,10 +272,17 @@ export default function CheckoutPage() {
           <CardContent className="space-y-3 text-sm">
             <div className="space-y-2 max-h-40 overflow-auto no-scrollbar">
               {cart.items.map((it) => (
-                <div key={it.productId} className="flex justify-between text-slate-700 font-extrabold">
-                  <span className="line-clamp-1 text-xs">
-                    {it.snapshot.name} × {it.quantity}
-                  </span>
+                <div key={`${it.productId}-${it.notes ?? ""}`} className="flex justify-between items-start text-slate-700 font-extrabold gap-2">
+                  <div className="flex flex-col min-w-0">
+                    <span className="line-clamp-1 text-xs">
+                      {it.snapshot.name} × {it.quantity}
+                    </span>
+                    {it.notes && (
+                      <span className="text-[9px] text-orange-600 bg-orange-50 border border-orange-100 rounded px-1.5 py-0.5 font-black mt-0.5 w-fit">
+                        {it.notes}
+                      </span>
+                    )}
+                  </div>
                   <span className="font-mono text-slate-900 font-black shrink-0 text-xs">
                     {formatEGP(it.snapshot.price * it.quantity)}
                   </span>

@@ -20,8 +20,8 @@ export function BottomNav({ storeSlug }: { storeSlug?: string }) {
   const cartHref = currentSlug ? `/cart?store=${currentSlug}` : "/cart";
 
   const items = [
-    { href: homeHref, icon: Home, label: "الرئيسية", active: pathname.startsWith("/s/") && !pathname.includes("cat=offers") },
-    { href: offersHref, icon: Tag, label: "العروض", active: pathname.includes("cat=offers") },
+    { href: homeHref, icon: Home, label: "الرئيسية", active: pathname.startsWith("/s/") },
+    { href: offersHref, icon: Tag, label: "العروض", active: false },
     { href: ordersHref, icon: ClipboardList, label: "طلباتي", active: pathname.startsWith("/orders") },
     { href: cartHref, icon: ShoppingBag, label: "السلة", active: pathname.startsWith("/cart"), badge: api.count },
     { href: profileHref, icon: User, label: "حسابي", active: pathname.startsWith("/profile") },

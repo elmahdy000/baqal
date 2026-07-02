@@ -113,7 +113,7 @@ export function ProductCard({
           }}
           aria-label={isFav ? "إزالة من المفضلة" : "أضف للمفضلة"}
           className={cn(
-            "absolute top-2 left-2 h-8.5 w-8.5 rounded-full flex items-center justify-center shadow-sm border transition-all duration-200 active:scale-90",
+            "absolute top-2 left-2 h-9 w-9 rounded-full flex items-center justify-center shadow-sm border transition-all duration-200 active:scale-90",
             isFav
               ? "bg-red-50 border-red-100 text-red-500 hover:bg-red-100"
               : "bg-white/90 backdrop-blur border-slate-200 text-slate-500 hover:bg-white"

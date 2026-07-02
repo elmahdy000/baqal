@@ -109,7 +109,7 @@ function ProfileContent() {
               className="flex items-center gap-3 p-4 hover:bg-gray-50/50 transition-colors"
             >
               <div className="h-10 w-10 rounded-xl bg-red-50 flex items-center justify-center shrink-0">
-                <Heart className="h-5 w-5 text-red-500 fill-red-50" />
+                <Heart className="h-5 w-5 text-red-500 fill-red-500" />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="font-extrabold text-gray-900 text-sm">سلة البيت</div>

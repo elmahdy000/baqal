@@ -168,7 +168,7 @@ function OrderRow({ order }: { order: OrderSummary }) {
 
   return (
     <Link href={href} className="block">
-      <Card className="hover:shadow-md border-slate-200/80 rounded-2xl shadow-sm transition-all duration-305 hover:-translate-y-0.5 bg-white group overflow-hidden">
+      <Card className="hover:shadow-md border-slate-200/80 rounded-2xl shadow-sm transition-all duration-300 hover:-translate-y-0.5 bg-white group overflow-hidden">
         <CardContent className="space-y-3 py-4 px-4">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">

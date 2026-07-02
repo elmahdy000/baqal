@@ -114,7 +114,7 @@ export function ProductDetailAdd({
               <button
                 key={w}
                 onClick={() => addWithNote(w)}
-                className="py-2.5 px-2 rounded-xl text-xs font-extrabold bg-slate-50 border border-slate-200/80 text-slate-800 hover:bg-orange-50 hover:border-orange-200 hover:text-[#EA580C] transition-all duration-205 text-center active:scale-95"
+                className="py-2.5 px-2 rounded-xl text-xs font-extrabold bg-slate-50 border border-slate-200/80 text-slate-800 hover:bg-orange-50 hover:border-orange-200 hover:text-[#EA580C] transition-all duration-200 text-center active:scale-95"
               >
                 {w}
               </button>
@@ -137,7 +137,7 @@ export function ProductDetailAdd({
               <button
                 key={p}
                 onClick={() => addWithNote(p)}
-                className="py-2 px-1 rounded-xl text-xs font-extrabold bg-slate-50 border border-slate-200/80 text-slate-800 hover:bg-emerald-50 hover:border-emerald-200 hover:text-[#16A34A] transition-all duration-205 text-center active:scale-95"
+                className="py-2 px-1 rounded-xl text-xs font-extrabold bg-slate-50 border border-slate-200/80 text-slate-800 hover:bg-emerald-50 hover:border-emerald-200 hover:text-[#16A34A] transition-all duration-200 text-center active:scale-95"
               >
                 {p}
               </button>
