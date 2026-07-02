@@ -173,6 +173,7 @@ export default async function ProductDetailPage({
                     imageUrl: p.imageUrl,
                     stockQuantity: p.stockQuantity,
                     isAvailable: p.isAvailable,
+                    unit: p.unit,
                   };
                   return (
                     <ProductCard

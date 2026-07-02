@@ -57,7 +57,7 @@ function CartContent() {
           <>
             <div className="space-y-3">
               {cart.items.map((item) => (
-                <Card key={item.productId} className="border-slate-200/80 rounded-2xl shadow-sm bg-white overflow-hidden">
+                <Card key={`${item.productId}-${item.notes ?? ""}`} className="border-slate-200/80 rounded-2xl shadow-sm bg-white overflow-hidden">
                   <CardContent className="flex items-center gap-3 py-3.5 px-3.5">
                     <div className="h-16 w-16 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center overflow-hidden shrink-0">
                       {item.snapshot.imageUrl ? (

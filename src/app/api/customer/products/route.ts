@@ -33,6 +33,7 @@ export async function GET(req: Request) {
       imageUrl: true,
       stockQuantity: true,
       isAvailable: true,
+      unit: true,
     },
   });
 
@@ -45,6 +46,7 @@ export async function GET(req: Request) {
       imageUrl: p.imageUrl,
       stockQuantity: p.stockQuantity,
       isAvailable: p.isAvailable,
+      unit: p.unit,
     })),
   });
 }
