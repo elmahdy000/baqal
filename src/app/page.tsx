@@ -37,17 +37,25 @@ import {
   Eye,
   Info,
   Layers,
-  ChevronLeft
+  ChevronLeft,
+  Heart,
+  Milk,
+  Wheat,
+  Droplets,
+  Egg,
+  Sun,
+  Cpu,
+  Flame
 } from "lucide-react";
 
 // Mock Products for the Simulator
 const SIMULATOR_PRODUCTS = [
-  { id: 1, name: "حليب كامل الدسم 1 لتر", price: 38, icon: "🥛", category: "ألبان" },
-  { id: 2, name: "جبن فيتا عبور لاند 500 جرام", price: 42, icon: "🧀", category: "ألبان" },
-  { id: 3, name: "شيبسي عائلي ملح", price: 15, icon: "🥔", category: "تسالي" },
-  { id: 4, name: "طبق بيض أحمر طازج 30 بيضة", price: 155, icon: "🥚", category: "بيض" },
-  { id: 5, name: "كرتونة مياه معدنية 1.5 لتر × 6", price: 48, icon: "💧", category: "مشروبات" },
-  { id: 6, name: "زيت عباد شمس 1 لتر", price: 78, icon: "🌻", category: "بقالة" },
+  { id: 1, name: "حليب كامل الدسم 1 لتر", price: 38, Icon: Milk, category: "ألبان" },
+  { id: 2, name: "جبن فيتا عبور لاند 500 جرام", price: 42, Icon: Package, category: "ألبان" },
+  { id: 3, name: "شيبسي عائلي ملح", price: 15, Icon: Cpu, category: "تسالي" },
+  { id: 4, name: "طبق بيض أحمر طازج 30 بيضة", price: 155, Icon: Egg, category: "بيض" },
+  { id: 5, name: "كرتونة مياه معدنية 1.5 لتر × 6", price: 48, Icon: Droplets, category: "مشروبات" },
+  { id: 6, name: "زيت عباد شمس 1 لتر", price: 78, Icon: Sun, category: "بقالة" },
 ];
 
 export default function LandingPage() {
@@ -303,15 +311,15 @@ export default function LandingPage() {
                   </div>
                   <div className="p-2 space-y-1.5 bg-gray-50 max-h-[140px] overflow-y-auto">
                     <div className="bg-white rounded-lg p-1.5 border border-gray-100 flex items-center justify-between text-[8px]">
-                      <span className="font-bold">🥛 حليب كامل الدسم</span>
+                      <span className="font-bold flex items-center gap-1"><Milk className="h-3 w-3 text-blue-400" /> حليب كامل الدسم</span>
                       <span className="font-black text-[#16A34A] font-mono">38 ج.م</span>
                     </div>
                     <div className="bg-white rounded-lg p-1.5 border border-gray-100 flex items-center justify-between text-[8px]">
-                      <span className="font-bold">🍞 عيش بلدي طازج</span>
+                      <span className="font-bold flex items-center gap-1"><Wheat className="h-3 w-3 text-amber-400" /> عيش بلدي طازج</span>
                       <span className="font-black text-[#16A34A] font-mono">15 ج.م</span>
                     </div>
                     <div className="bg-white rounded-lg p-1.5 border border-gray-100 flex items-center justify-between text-[8px]">
-                      <span className="font-bold">💧 مياه معدنية 6 زجاجات</span>
+                      <span className="font-bold flex items-center gap-1"><Droplets className="h-3 w-3 text-sky-400" /> مياه معدنية 6 زجاجات</span>
                       <span className="font-black text-[#16A34A] font-mono">48 ج.م</span>
                     </div>
                   </div>
@@ -696,7 +704,9 @@ export default function LandingPage() {
                     {SIMULATOR_PRODUCTS.map((prod) => (
                       <div key={prod.id} className="bg-white border border-gray-150 rounded-xl p-3 flex flex-col justify-between hover:border-green-300 transition shadow-sm">
                         <div className="flex justify-between items-start">
-                          <span className="text-2xl">{prod.icon}</span>
+                          <div className="h-8 w-8 rounded-lg bg-green-50 border border-green-100 flex items-center justify-center text-[#16A34A]">
+                            <prod.Icon className="h-4 w-4" />
+                          </div>
                           <span className="text-[9px] bg-gray-100 text-gray-650 px-2 py-0.5 rounded-full font-bold">
                             {prod.category}
                           </span>
@@ -1872,7 +1882,7 @@ export default function LandingPage() {
             <div>© 2026 Baqal. جميع الحقوق محفوظة.</div>
             <div className="flex gap-1.5 items-center">
               <span>صُنع بشغف لتطوير المتاجر المحلية</span>
-              <span className="text-red-500">❤️</span>
+              <Heart className="h-3.5 w-3.5 text-red-500 fill-red-500" />
             </div>
           </div>
         </div>

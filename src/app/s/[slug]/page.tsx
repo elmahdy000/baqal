@@ -11,7 +11,7 @@ import { BottomNav } from "@/components/customer/bottom-nav";
 import { PwaRegister } from "@/components/customer/pwa-register";
 import { FavoritesLink } from "@/components/customer/favorites-link";
 import { AddAllButton } from "@/components/customer/add-all-button";
-import { Store as StoreIcon, MessageSquare, Percent } from "lucide-react";
+import { Store as StoreIcon, MessageSquare, Percent, Zap, Flame, Star, ShoppingBasket, TrendingUp } from "lucide-react";
 import { isStoreOpenNow } from "@/lib/hours";
 
 export const dynamic = "force-dynamic";
@@ -171,19 +171,19 @@ export default async function StorePage({
           <div className="no-scrollbar overflow-x-auto -mx-4 px-4 py-1">
             <div className="flex gap-2 w-max">
               <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#ECFDF5] border border-[#DCFCE7] text-[10px] font-black text-[#15803D] shadow-sm">
-                <span>⚡</span>
+                <Zap className="h-3 w-3" />
                 <span>توصيل سريع</span>
               </div>
               <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-50 border border-orange-100 text-[10px] font-black text-[#F97316] shadow-sm">
-                <span>🔥</span>
+                <Flame className="h-3 w-3" />
                 <span>عروض شغالة</span>
               </div>
               <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-100 text-[10px] font-black text-blue-700 shadow-sm">
-                <span>🌟</span>
+                <TrendingUp className="h-3 w-3" />
                 <span>أكثر طلبًا</span>
               </div>
               <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-purple-50 border border-purple-100 text-[10px] font-black text-purple-700 shadow-sm">
-                <span>🛒</span>
+                <ShoppingBasket className="h-3 w-3" />
                 <span>منتجات يومية</span>
               </div>
             </div>
@@ -222,7 +222,7 @@ export default async function StorePage({
           <section className="space-y-3.5">
             <h2 className="text-base font-black text-slate-900 flex items-center gap-1.5">
               <span>عروض اليوم</span>
-              <span className="text-orange-500">🔥</span>
+              <Flame className="h-4 w-4 text-orange-500" />
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {activeOffers.map((o) => (
@@ -277,7 +277,7 @@ export default async function StorePage({
               <div>
                 <h2 className="text-base font-black text-slate-950 flex items-center gap-1.5">
                   <span>محتاجه بسرعة</span>
-                  <span className="text-[#16A34A] text-lg">⚡</span>
+                  <Zap className="h-4 w-4 text-[#16A34A]" />
                 </h2>
                 <p className="text-[10px] text-slate-500 font-extrabold mt-0.5">أهم المنتجات اللي بتتطلب بسرعة</p>
               </div>
