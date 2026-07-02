@@ -527,21 +527,31 @@ export default function LandingPage() {
             </p>
           </div>
 
-          {/* Timeline */}
-          <div className="grid grid-cols-1 md:grid-cols-6 gap-6 max-w-5xl mx-auto mb-12">
+          {/* Steps Grid — 3 columns × 2 rows */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto mb-12">
             {[
-              { num: "1", title: "ننشئ حساب للبقال", desc: "فتح حساب متجر وإضافة البيانات الأساسية." },
-              { num: "2", title: "نضيف المنتجات والأسعار", desc: "رفع الصور وتحديد الأسعار والكمية." },
-              { num: "3", title: "نربط العمارات", desc: "تخصيص وربط العمارات السكنية بالمتجر." },
-              { num: "4", title: "نطبع QR لكل عمارة", desc: "توليد الكود الملصق للمداخل وال elevators." },
-              { num: "5", title: "السكان يطلبوا", desc: "مسح فوري والطلب بدون تثبيت أي تطبيق." },
-              { num: "6", title: "البقال يستقبل الطلب", desc: "تنبيهات فورية Realtime وتنفيذ سريع." },
-            ].map((step, i) => (
-              <div key={i} className="bg-slate-50 border border-gray-200/60 rounded-2xl p-5 text-right relative flex flex-col justify-between shadow-sm">
-                <span className="absolute top-3 left-4 text-3xl font-black text-green-200">{step.num}</span>
-                <div className="space-y-2 mt-4">
-                  <h3 className="font-extrabold text-sm text-gray-900 leading-tight">{step.title}</h3>
-                  <p className="text-[11px] text-[#6B7280] leading-relaxed">{step.desc}</p>
+              { num: "١", Icon: User,         title: "ننشئ حساب للبقال",      desc: "فتح حساب متجر وإضافة البيانات الأساسية والصورة." },
+              { num: "٢", Icon: Package,      title: "نضيف المنتجات والأسعار", desc: "رفع الصور، تحديد الأسعار، الوحدات، والكميات." },
+              { num: "٣", Icon: Building,     title: "نربط العمارات",          desc: "تخصيص وربط العمارات السكنية بالمتجر بسهولة." },
+              { num: "٤", Icon: QrCode,       title: "نطبع QR لكل عمارة",     desc: "توليد الكود الملصق للمداخل والمصاعد." },
+              { num: "٥", Icon: ShoppingCart, title: "السكان يطلبوا",          desc: "مسح سريع والطلب من المتصفح بدون تثبيت تطبيق." },
+              { num: "٦", Icon: Bell,         title: "البقال يستقبل وينفّذ",   desc: "تنبيهات فورية Realtime وتنفيذ سريع للطلب." },
+            ].map(({ num, Icon, title, desc }, i) => (
+              <div
+                key={i}
+                className="bg-white border border-gray-200 rounded-2xl p-6 text-right flex flex-col gap-4 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
+              >
+                {/* Top row: step badge + icon */}
+                <div className="flex items-center justify-between">
+                  <div className="h-10 w-10 rounded-xl bg-green-50 border border-green-100 flex items-center justify-center text-[#16A34A]">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <span className="text-2xl font-black text-green-200 leading-none">{num}</span>
+                </div>
+                {/* Text */}
+                <div className="space-y-1.5">
+                  <h3 className="font-extrabold text-sm text-gray-900 leading-snug">{title}</h3>
+                  <p className="text-xs text-[#6B7280] leading-relaxed">{desc}</p>
                 </div>
               </div>
             ))}
